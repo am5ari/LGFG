@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin | Look Good Feel Good Lexington</title>
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<link rel="stylesheet" href="admin.css">
+
+</head>
+
+
+<body>
+
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            <img src="logo.png" alt="Look Good Feel Good Lexington">
+        </div>
+
+        <span class="kicker">ADMIN PORTAL</span>
+
+        <h1>Welcome Back</h1>
+
+        <p class="login-description">
+            Sign in to manage Look Good Feel Good Lexington events.
+        </p>
+
+
+        <form id="loginForm">
+
+            <label>
+                Email
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="admin@example.com"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Password
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="admin-button"
+            >
+                Sign In
+            </button>
+
+
+            <p
+                id="loginError"
+                class="error-message"
+            ></p>
+
+        </form>
+
+
+        <a href="index.html" class="back-link">
+            ← Back to Website
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ADMIN DASHBOARD -->
+
+<div id="dashboard" class="dashboard hidden">
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+
+            <img
+                src="logo.png"
+                alt="Look Good Feel Good Lexington"
+            >
+
+            <div>
+                <strong>Admin Dashboard</strong>
+                <small>Look Good Feel Good Lexington</small>
+            </div>
+
+        </div>
+
+
+        <div class="admin-header-actions">
+
+            <a
+                href="index.html"
+                target="_blank"
+                class="view-site"
+            >
+                View Website
+            </a>
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+            >
+                Log Out
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="admin-main">
+
+
+        <div class="dashboard-heading">
+
+            <div>
+
+                <span class="kicker">
+                    WEBSITE MANAGEMENT
+                </span>
+
+                <h1>Events</h1>
+
+                <p>
+                    Add and manage community events that appear on
+                    the public website.
+                </p>
+
+            </div>
+
+
+            <button
+                id="addEventButton"
+                class="admin-button"
+            >
+                + Add New Event
+            </button>
+
+        </div>
+
+
+
+        <!-- EVENT FORM -->
+
+        <section
+            id="eventFormSection"
+            class="event-form-section hidden"
+        >
+
+            <div class="form-header">
+
+                <div>
+
+                    <span class="kicker">
+                        EVENT EDITOR
+                    </span>
+
+                    <h2 id="formTitle">
+                        Add New Event
+                    </h2>
+
+                </div>
+
+                <button
+                    id="cancelEventButton"
+                    class="close-button"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="eventForm">
+
+                <input
+                    type="hidden"
+                    id="eventId"
+                >
+
+
+                <div class="form-grid">
+
+
+                    <label class="full">
+
+                        Event Name
+
+                        <input
+                            type="text"
+                            id="eventTitle"
+                            placeholder="Empowering Job Seekers"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Date
+
+                        <input
+                            type="date"
+                            id="eventDate"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Time
+
+                        <input
+                            type="text"
+                            id="eventTime"
+                            placeholder="10 AM – 2 PM"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Location
+
+                        <input
+                            type="text"
+                            id="eventLocation"
+                            placeholder="Greyline Station"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Address
+
+                        <input
+                            type="text"
+                            id="eventAddress"
+                            placeholder="101 W Loudon Ave, Lexington, KY 40508"
+                        >
+
+                    </label>
+
+
+                    <label class="full">
+
+                        Description
+
+                        <textarea
+                            id="eventDescription"
+                            rows="5"
+                            placeholder="Describe the event..."
+                            required
+                        ></textarea>
+
+                    </label>
+
+
+                    
+
+
+                    <label>
+
+                        Button Text
+
+                        <input
+                            type="text"
+                            id="eventButtonText"
+                            placeholder="Get Involved"
+                        >
+
+                    </label>
+
+
+                    <label class="full">
+
+                        Button Link
+
+                        <input
+                            type="url"
+                            id="eventButtonLink"
+                            placeholder="https://..."
+                        >
+
+                    </label>
+
+
+                    <label class="featured-option">
+
+                        <input
+                            type="checkbox"
+                            id="eventFeatured"
+                        >
+
+                        <span>
+                            Make this the featured event
+                        </span>
+
+                    </label>
+
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelEventButton2"
+                        class="secondary-button"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="admin-button"
+                    >
+                        Save Event
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="formMessage"
+                    class="form-message"
+                ></p>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- EVENTS -->
+
+        <section>
+
+            <div class="section-heading">
+
+                <h2>Your Events</h2>
+
+                <span id="eventCount">
+                    0 Events
+                </span>
+
+            </div>
+
+
+            <div
+                id="eventsList"
+                class="events-list"
+            >
+
+                <div class="loading">
+                    Loading events...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script
+    type="module"
+    src="admin.js"
+></script>
+
+</body>
+
+</html>
