@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Community resources and support connections from Look Good Feel Good Lexington."
+    >
+
+    <title>
+        Community Resources | Look Good Feel Good Lexington
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        .resources-page-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(3,45,93,.97),
+                    rgba(7,63,125,.92)
+                );
+        }
+
+        .resources-page-hero h1 {
+            color: var(--white);
+        }
+
+        .resources-page-hero h1 span {
+            color: var(--green);
+        }
+
+        .resources-page-hero p {
+            max-width: 700px;
+            color: rgba(255,255,255,.82);
+            line-height: 1.8;
+        }
+
+
+        .resources-page-intro {
+            padding: 90px 0 65px;
+            background: var(--white);
+        }
+
+        .resources-page-intro-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .resources-page-intro h2 {
+            margin-bottom: 20px;
+        }
+
+        .resources-page-intro p {
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+
+        .resources-page-list {
+            padding: 75px 0 110px;
+            background: var(--off-white);
+        }
+
+        .resources-page-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+
+        .resource-page-card {
+            display: flex;
+            gap: 22px;
+            padding: 30px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.04);
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .resource-page-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(0,0,0,.09);
+        }
+
+
+        .resource-page-icon {
+            flex: 0 0 55px;
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: rgba(0,166,81,.10);
+
+            font-size: 25px;
+        }
+
+
+        .resource-page-card span {
+            display: block;
+            margin-bottom: 7px;
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .12em;
+
+            color: var(--green);
+        }
+
+
+        .resource-page-card h3 {
+            margin: 0 0 10px;
+        }
+
+
+        .resource-page-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+
+        .resources-page-cta {
+            padding: 90px 0;
+            background: rgba(255,255,255,.82);
+        }
+
+        .resources-page-cta-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .resources-page-cta h2 {
+            color: var(--dark);
+            margin-bottom: 18px;
+        }
+
+        .resources-page-cta p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: var(--dark  );
+            line-height: 1.8;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .resources-page-intro {
+                padding: 70px 0 50px;
+            }
+
+            .resources-page-list {
+                padding: 60px 0 75px;
+            }
+
+            .resources-page-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .resource-page-card {
+                padding: 24px 20px;
+                border-radius: 17px;
+            }
+
+            .resources-page-cta {
+                padding: 70px 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="site-header">
+
+    <div class="section-container header-inner">
+
+        <a href="index.html" class="brand">
+            <img src="logo.png" alt="Look Good Feel Good Lexington">
+        </a>
+
+        <button
+            class="hamburger"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+            ☰
+        </button>
+
+        
+<nav class="nav">
+
+    <a href="index.html">
+        Home
+    </a>
+
+    <!-- ABOUT US -->
+    <div class="nav-dropdown">
+
+        <button
+            type="button"
+            class="nav-parent"
+            aria-expanded="false"
+        >
+            About Us
+            <span class="dropdown-arrow">⌄</span>
+        </button>
+
+        <div class="dropdown-menu">
+
+            <a href="about.html#mission">
+                Our Mission
+            </a>
+
+            <a href="team.html">
+                Meet the Team
+            </a>
+
+            <a href="resources.html">
+                Community Resources
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <a href="events.html">
+        Events
+    </a>
+
+
+    <a href="index.html#news">
+        News
+    </a>
+
+
+    <!-- GET INVOLVED -->
+    <div class="nav-dropdown">
+
+        <button
+            type="button"
+            class="nav-parent"
+            aria-expanded="false"
+        >
+            Get Involved
+            <span class="dropdown-arrow">⌄</span>
+        </button>
+
+        <div class="dropdown-menu">
+
+            <a href="index.html#get-involved">
+                Volunteer
+            </a>
+
+            <a href="donate.html">
+                Donate
+            </a>
+
+            <a href="sponsors.html">
+                Become a Sponsor
+            </a>
+
+            
+
+            <a href="index.html#contact">
+                Contact Us
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+</header>
+
+
+<main>
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="page-hero resources-page-hero">
+
+    <div class="section-container">
+
+        <span class="kicker">
+            COMMUNITY RESOURCES
+        </span>
+
+        <h1>
+            Find the support
+            <br>
+            you need to <span>move forward.</span>
+        </h1>
+
+        <p>
+            Look Good Feel Good Lexington connects individuals
+            with organizations and agencies that can provide
+            additional support throughout the community.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- ==================================================
+     RESOURCE CARDS
+================================================== -->
+
+<section class="resources-page-list">
+
+    <div class="section-container">
+
+        <div class="resources-page-grid">
+
+
+            <!-- EMPLOYMENT -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    💼
+                </div>
+
+                <div>
+
+                    <span>
+                        CAREER
+                    </span>
+
+                    <h3>
+                        Employment & Job Placement
+                    </h3>
+
+                    <p>
+                        Connections to employment opportunities,
+                        job placement assistance, resume support,
+                        and career development resources.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- HOUSING -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    🏠
+                </div>
+
+                <div>
+
+                    <span>
+                        STABILITY
+                    </span>
+
+                    <h3>
+                        Housing & Support
+                    </h3>
+
+                    <p>
+                        Connections to organizations and agencies
+                        that can provide housing services and
+                        additional support.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- RECOVERY -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    🤝
+                </div>
+
+                <div>
+
+                    <span>
+                        RECOVERY
+                    </span>
+
+                    <h3>
+                        Recovery Assistance
+                    </h3>
+
+                    <p>
+                        Support connections for individuals
+                        navigating recovery and reentry into
+                        the workforce and community.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- HEALTH -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    ❤️
+                </div>
+
+                <div>
+
+                    <span>
+                        HEALTH
+                    </span>
+
+                    <h3>
+                        Healthcare & Wellness
+                    </h3>
+
+                    <p>
+                        Connections to healthcare, wellness,
+                        and other community support services.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- EDUCATION -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    🎓
+                </div>
+
+                <div>
+
+                    <span>
+                        EDUCATION
+                    </span>
+
+                    <h3>
+                        Education & Vocational Training
+                    </h3>
+
+                    <p>
+                        Information and connections related to
+                        education, training, and vocational
+                        development opportunities.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- COMMUNITY -->
+
+            <article class="resource-page-card">
+
+                <div class="resource-page-icon">
+                    🌐
+                </div>
+
+                <div>
+
+                    <span>
+                        COMMUNITY
+                    </span>
+
+                    <h3>
+                        Additional Community Support
+                    </h3>
+
+                    <p>
+                        Connections to additional organizations,
+                        agencies, and services that can help
+                        individuals address barriers and move
+                        forward.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     CTA
+================================================== -->
+
+<section class="resources-page-cta">
+
+    <div class="section-container">
+
+        <div class="resources-page-cta-inner">
+
+            <span class="kicker">
+                NEED HELP FINDING A RESOURCE?
+            </span>
+
+            <h2>
+                Let's connect you
+                with the right support.
+            </h2>
+
+            <p>
+                If you have questions about available
+                community resources, reach out to
+                Look Good Feel Good Lexington.
+            </p>
+
+            <a
+                href="index.html#contact"
+                class="btn green"
+            >
+                Contact Us →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="site-footer">
+
+    <div class="section-container footer-inner">
+
+        <div>
+
+            <img
+                src="logo.png"
+                alt="Look Good Feel Good Lexington"
+                class="footer-logo"
+            >
+
+            <p>
+                Empowering individuals in recovery and reentry
+                through confidence, resources and opportunity.
+            </p>
+
+        </div>
+
+
+        <div class="Quick-Links">
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+            <a href="team.html">
+                Meet the Team
+            </a>
+
+            <a href="resources.html">
+                Community Resources
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+            <a href="sponsors.html">
+                Sponsors
+            </a>
+
+        </div>
+
+
+        <div class="Quick-Links">
+
+            <h4>
+                Contact
+            </h4>
+
+            <a href="tel:+18594940770">
+                859-494-0770
+            </a>
+
+            <a href="mailto:LookGoodFeelGoodLex@gmail.com">
+                LookGoodFeelGoodLex@gmail.com
+            </a>
+
+            <p>
+                101 W Loudon<br>
+                Lexington, KY 40508
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script
+    type="module"
+    src="script.js"
+></script>
+
+
+</body>
+
+</html>
+
