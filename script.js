@@ -857,3 +857,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+/* ==================================================
+   FOOTER SPONSOR ROTATION
+================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const sponsors = document.querySelectorAll(".footer-sponsor");
+
+    if (!sponsors.length) return;
+
+    let currentSponsor = 0;
+
+    setInterval(() => {
+
+        sponsors[currentSponsor].classList.remove("active");
+
+        currentSponsor++;
+
+        if (currentSponsor >= sponsors.length) {
+            currentSponsor = 0;
+        }
+
+        sponsors[currentSponsor].classList.add("active");
+
+    }, 3500);
+
+});
