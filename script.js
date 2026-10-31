@@ -754,6 +754,8 @@ document.addEventListener("DOMContentLoaded", () => {
     startTimer();
 });
 
+
+
 /* =========================
    FEATURED VIDEO CAROUSEL
 ========================= */
@@ -770,93 +772,98 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const thumbnailContainer = document.getElementById("videoThumbnails");
 
-
     if (!featuredVideo || !featuredVideoSource || !thumbnails.length) {
         return;
     }
 
+    let currentVideo = 0;
 
-    /* =========================
-       CHANGE FEATURED VIDEO
-    ========================= */
+    // GET VIDEO PATHS FROM THUMBNAILS
+    const videoPaths = Array.from(thumbnails).map(thumbnail => {
+        return thumbnail.dataset.video;
+    });
 
-    thumbnails.forEach((thumbnail) => {
+    // PLAY SELECTED VIDEO
+    function playVideo(index) {
+
+        currentVideo = index;
+
+        featuredVideo.pause();
+        featuredVideo.style.opacity = "0";
+
+        featuredVideoSource.src = videoPaths[currentVideo];
+
+        featuredVideo.muted = true;
+        featuredVideo.load();
+
+        featuredVideo.play().catch(error => {
+            console.log("Video playback error:", error);
+        });
+
+        thumbnails.forEach(item => {
+            item.classList.remove("active");
+        });
+
+        thumbnails[currentVideo].classList.add("active");
+    }
+
+    // FADE VIDEO BACK IN
+    featuredVideo.addEventListener("loadeddata", () => {
+        featuredVideo.style.opacity = "1";
+    });
+
+    // AUTOPLAY FIRST VIDEO
+    featuredVideo.muted = true;
+    featuredVideo.autoplay = true;
+    featuredVideo.playsInline = true;
+
+    playVideo(0);
+
+    // AUTOMATICALLY PLAY NEXT VIDEO WHEN CURRENT ONE ENDS
+    featuredVideo.addEventListener("ended", () => {
+
+        let nextVideo = currentVideo + 1;
+
+        // LOOP BACK TO FIRST VIDEO
+        if (nextVideo >= videoPaths.length) {
+            nextVideo = 0;
+        }
+
+        playVideo(nextVideo);
+
+    });
+
+    // CLICK THUMBNAILS TO CHANGE VIDEO
+    thumbnails.forEach((thumbnail, index) => {
 
         thumbnail.addEventListener("click", () => {
-
-            const videoPath = thumbnail.dataset.video;
-
-            if (!videoPath) {
-                return;
-            }
-
-
-            /* Stop current video */
-
-            featuredVideo.pause();
-
-
-            /* Fade out */
-
-            featuredVideo.style.opacity = "0";
-
-
-            setTimeout(() => {
-
-                featuredVideoSource.src = videoPath;
-
-                featuredVideo.load();
-
-                featuredVideo.style.opacity = "1";
-
-            }, 300);
-
-
-            /* Update active thumbnail */
-
-            thumbnails.forEach((item) => {
-                item.classList.remove("active");
-            });
-
-            thumbnail.classList.add("active");
-
+            playVideo(index);
         });
 
     });
 
-
-    /* =========================
-       THUMBNAIL SCROLLING
-    ========================= */
-
-    if (leftButton) {
-
+    // THUMBNAIL SCROLLING
+    if (leftButton && thumbnailContainer) {
         leftButton.addEventListener("click", () => {
-
             thumbnailContainer.scrollBy({
                 left: -300,
                 behavior: "smooth"
             });
-
         });
-
     }
 
-
-    if (rightButton) {
-
+    if (rightButton && thumbnailContainer) {
         rightButton.addEventListener("click", () => {
-
             thumbnailContainer.scrollBy({
                 left: 300,
                 behavior: "smooth"
             });
-
         });
-
     }
 
 });
+
+
 
 /* ==================================================
    FOOTER SPONSOR ROTATION
