@@ -5446,6 +5446,48 @@ box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
 }
 
 
+.video-thumbnail {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.video-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+
+/* CENTER VIDEO THUMBNAILS */
+
+.video-carousel {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.video-thumbnails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+
 /* =====================================
    MOBILE VIDEO THUMBNAILS
 ===================================== */
