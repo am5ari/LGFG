@@ -756,14 +756,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-/* =========================
+
+
+/* =================================
    FEATURED VIDEO CAROUSEL
-========================= */
+   IMPROVED DOUBLE VIDEO PLAYER
+================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const featuredVideo = document.getElementById("featuredVideo");
-    const featuredVideoSource = document.getElementById("featuredVideoSource");
+    const videoA = document.getElementById("featuredVideoA");
+    const videoB = document.getElementById("featuredVideoB");
 
     const thumbnails = document.querySelectorAll(".video-thumbnail");
 
@@ -772,96 +775,248 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const thumbnailContainer = document.getElementById("videoThumbnails");
 
-    if (!featuredVideo || !featuredVideoSource || !thumbnails.length) {
-        return;
-    }
+    if (!videoA || !videoB || !thumbnails.length) return;
+
+    const videoPaths = Array.from(thumbnails).map(item => item.dataset.video);
+
+    if (videoPaths.some(path => !path)) return;
+
+    let activePlayer = videoA;
+    let standbyPlayer = videoB;
 
     let currentVideo = 0;
+    let standbyIndex = -1;
+    let pendingIndex = null;
 
-    // GET VIDEO PATHS FROM THUMBNAILS
-    const videoPaths = Array.from(thumbnails).map(thumbnail => {
-        return thumbnail.dataset.video;
+    let loadVersion = 0;
+    let switching = false;
+
+    const TRANSITION_TIME = 550;
+
+    // Configure both players
+    [videoA, videoB].forEach(video => {
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
     });
 
-    // PLAY SELECTED VIDEO
-    function playVideo(index) {
-
-        currentVideo = index;
-
-        featuredVideo.pause();
-        featuredVideo.style.opacity = "0";
-
-        featuredVideoSource.src = videoPaths[currentVideo];
-
-        featuredVideo.muted = true;
-        featuredVideo.load();
-
-        featuredVideo.play().catch(error => {
-            console.log("Video playback error:", error);
+    // Update thumbnail selection
+    function updateThumbnails(index) {
+        thumbnails.forEach((item, i) => {
+            item.classList.toggle("active", i === index);
         });
-
-        thumbnails.forEach(item => {
-            item.classList.remove("active");
-        });
-
-        thumbnails[currentVideo].classList.add("active");
     }
 
-    // FADE VIDEO BACK IN
-    featuredVideo.addEventListener("loadeddata", () => {
-        featuredVideo.style.opacity = "1";
-    });
+    // Wait for an actual video frame
+    function waitForVideoFrame(video, callback) {
 
-    // AUTOPLAY FIRST VIDEO
-    featuredVideo.muted = true;
-    featuredVideo.autoplay = true;
-    featuredVideo.playsInline = true;
+        if (video.requestVideoFrameCallback) {
+            video.requestVideoFrameCallback(callback);
+        } else {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(callback);
+            });
+        }
+    }
 
-    playVideo(0);
+    // Prepare the next video in the hidden player
+    function prepareVideo(index) {
 
-    // AUTOMATICALLY PLAY NEXT VIDEO WHEN CURRENT ONE ENDS
-    featuredVideo.addEventListener("ended", () => {
+        index = (index + videoPaths.length) % videoPaths.length;
 
-        let nextVideo = currentVideo + 1;
+        if (index === currentVideo) return;
 
-        // LOOP BACK TO FIRST VIDEO
-        if (nextVideo >= videoPaths.length) {
-            nextVideo = 0;
+        // Don't reload an already prepared video
+        if (
+            standbyIndex === index &&
+            standbyPlayer.readyState >= 2
+        ) {
+            trySwitchVideo();
+            return;
         }
 
-        playVideo(nextVideo);
+        const version = ++loadVersion;
+
+        standbyPlayer.pause();
+
+        standbyIndex = index;
+
+        standbyPlayer.src = videoPaths[index];
+
+        standbyPlayer.load();
+
+        console.log("Preparing video:", index + 1);
+    }
+
+    // Switch videos only when the new video is ready
+    function trySwitchVideo() {
+
+        if (switching) return;
+        if (pendingIndex === null) return;
+        if (pendingIndex !== standbyIndex) return;
+        if (standbyPlayer.readyState < 2) return;
+
+        const targetIndex = pendingIndex;
+        const targetPlayer = standbyPlayer;
+        const version = loadVersion;
+
+        switching = true;
+
+        targetPlayer.currentTime = 0;
+        targetPlayer.muted = true;
+
+        targetPlayer.play().then(() => {
+
+            waitForVideoFrame(targetPlayer, () => {
+
+                // Ignore outdated loading requests
+                if (version !== loadVersion ||
+                    targetPlayer !== standbyPlayer ||
+                    pendingIndex !== targetIndex) {
+
+                    switching = false;
+                    return;
+                }
+
+                const oldPlayer = activePlayer;
+                const newPlayer = standbyPlayer;
+
+                // Update active video
+                currentVideo = targetIndex;
+                pendingIndex = null;
+                standbyIndex = -1;
+
+                // Show new video and fade out old video
+                newPlayer.classList.add("active-video");
+                oldPlayer.classList.remove("active-video");
+
+                // Swap players
+                activePlayer = newPlayer;
+                standbyPlayer = oldPlayer;
+
+                updateThumbnails(currentVideo);
+
+                switching = false;
+
+                // Stop old player after transition
+                setTimeout(() => {
+
+                    oldPlayer.pause();
+
+                    // Prepare the following video
+                    const nextIndex =
+                        (currentVideo + 1) % videoPaths.length;
+
+                    if (pendingIndex === null) {
+                        prepareVideo(nextIndex);
+                    }
+
+                }, TRANSITION_TIME);
+
+            });
+
+        }).catch(error => {
+
+            switching = false;
+
+            console.log("Video playback issue:", error);
+
+        });
+    }
+
+    // Detect when background video is ready
+    [videoA, videoB].forEach(video => {
+
+        video.addEventListener("loadeddata", trySwitchVideo);
+        video.addEventListener("canplay", trySwitchVideo);
 
     });
 
-    // CLICK THUMBNAILS TO CHANGE VIDEO
+    // Automatically advance when a video finishes
+    function handleVideoEnded(event) {
+
+        if (event.currentTarget !== activePlayer) return;
+
+        const nextIndex =
+            (currentVideo + 1) % videoPaths.length;
+
+        pendingIndex = nextIndex;
+
+        prepareVideo(nextIndex);
+
+        trySwitchVideo();
+    }
+
+    videoA.addEventListener("ended", handleVideoEnded);
+    videoB.addEventListener("ended", handleVideoEnded);
+
+    // Allow visitors to select any video
     thumbnails.forEach((thumbnail, index) => {
 
         thumbnail.addEventListener("click", () => {
-            playVideo(index);
+
+            if (index === currentVideo) return;
+
+            pendingIndex = index;
+
+            prepareVideo(index);
+
+            trySwitchVideo();
+
         });
 
     });
 
-    // THUMBNAIL SCROLLING
+    // Start the first video
+    videoA.src = videoPaths[0];
+    videoA.load();
+
+    videoA.addEventListener("loadeddata", function startFirstVideo() {
+
+        videoA.removeEventListener("loadeddata", startFirstVideo);
+
+        videoA.play().then(() => {
+
+            waitForVideoFrame(videoA, () => {
+                videoA.classList.add("active-video");
+            });
+
+        }).catch(error => {
+            console.log("Initial autoplay blocked:", error);
+        });
+
+    });
+
+    updateThumbnails(0);
+
+    // Prepare second video
+    prepareVideo(1);
+
+    // Thumbnail scrolling
     if (leftButton && thumbnailContainer) {
+
         leftButton.addEventListener("click", () => {
             thumbnailContainer.scrollBy({
                 left: -300,
                 behavior: "smooth"
             });
         });
+
     }
 
     if (rightButton && thumbnailContainer) {
+
         rightButton.addEventListener("click", () => {
             thumbnailContainer.scrollBy({
                 left: 300,
                 behavior: "smooth"
             });
         });
+
     }
 
 });
+
 
 
 

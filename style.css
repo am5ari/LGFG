@@ -5532,3 +5532,39 @@ box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
     }
 
 }
+
+
+/* =================================
+   SEAMLESS VIDEO TRANSITIONS
+================================= */
+
+/* =================================
+   SEAMLESS VIDEO TRANSITIONS
+================================= */
+
+.featured-video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+}
+
+.featured-video-container .featured-video {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.featured-video-container .featured-video.active-video {
+    opacity: 1;
+    z-index: 2;
+}
+
